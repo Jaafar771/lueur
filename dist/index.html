@@ -7,9 +7,9 @@
   <title>Lueur Beauty — Healthy Skin, Confident You</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root { --wine:#472438; --wine-deep:#2e1424; --plum:#785168; --olive:#72805b; --olive-dark:#3d4b32; --sage:#a6ae88; --moss:#53603f; --dusty:#a17583; --cream:#f4f0e7; --champagne:#ddc6a8; --rose:#ddc8bb; --copper:#ad795d; --ink:#2c2926; --line:rgba(71,36,56,.16); --serif:'Playfair Display', Georgia, serif; --sans:Manrope, Arial, sans-serif; --mono:'DM Mono', monospace; }
+    :root { --wine:#472438; --wine-deep:#2e1424; --plum:#785168; --olive:#72805b; --olive-dark:#3d4b32; --sage:#a6ae88; --moss:#53603f; --dusty:#a17583; --cream:#f4f0e7; --champagne:#ddc6a8; --rose:#ddc8bb; --copper:#ad795d; --ink:#2c2926; --line:rgba(71,36,56,.16); --serif:'Cormorant Garamond', Georgia, serif; --sans:'DM Sans', Arial, sans-serif; --mono:'DM Mono', monospace; }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; }
     body { margin:0; color:var(--ink); background:var(--cream); font-family:var(--sans); font-size:15px; line-height:1.55; }
@@ -59,6 +59,8 @@
     @media(max-width:800px) { .contact { padding:64px 0; }.contact-card { min-height:0; padding:27px 23px; }.contact-card h2 { font-size:clamp(39px,11vw,48px); margin:18px 0 15px; }.contact-card > p { font-size:14px; line-height:1.65; }.address-block { margin-top:25px; padding-top:17px; }.contact-card .button { align-self:stretch; min-height:49px; margin-top:22px; }.contact-map,.contact-map iframe { min-height:286px; }.contact-map-label { bottom:13px; font-size:8px; left:13px; padding:10px 11px; }.booking { padding:72px 0; }.booking-grid { gap:31px; }.booking h2 { font-size:clamp(42px,11vw,50px); }.booking-copy p { font-size:14px; line-height:1.65; }.booking-form { padding:23px 18px; }.form-grid { gap:16px; }.field { gap:8px; }.field label { font-size:10px; }.field input,.field select,.field textarea { font-size:16px; min-height:52px; padding:12px 13px; }.field textarea { height:110px; }.booking-form .button { min-height:52px; margin-top:18px; }.booking-fine { font-size:11px; line-height:1.6; margin-top:15px; } }
     @media(max-width:420px) { .contact-card { padding:24px 20px; }.contact-card h2 { font-size:39px; }.contact-map,.contact-map iframe { min-height:270px; }.booking { padding:64px 0; }.booking-form { padding:20px 15px; }.field input,.field select,.field textarea { padding-left:12px; padding-right:12px; } }
     .contact-card .button span,.booking-form .button span { font-size:0; height:8px; position:relative; width:8px; }.contact-card .button span::after,.booking-form .button span::after { border-right:1.5px solid currentColor; border-top:1.5px solid currentColor; content:""; height:7px; left:0; position:absolute; top:0; transform:rotate(45deg); width:7px; }.gallery-arrow { font-size:0; }.gallery-arrow::after { border-right:1.5px solid currentColor; border-top:1.5px solid currentColor; content:""; height:9px; transform:rotate(45deg); width:9px; }.gallery-arrow[data-gallery="prev"]::after { transform:rotate(-135deg); }
+    @media(max-width:800px) { .booking { overflow:visible; padding-bottom:calc(78px + env(safe-area-inset-bottom)); }.booking-grid { align-items:start; }.booking-copy > p[style] { display:none; }.booking-form { box-shadow:0 14px 28px rgba(34,26,21,.14); margin-bottom:env(safe-area-inset-bottom); overflow:visible; position:relative; scroll-margin-top:96px; z-index:2; }.field textarea { height:96px; }.booking-fine { padding-bottom:4px; }.form-message { line-height:1.55; } }
+    @media(max-width:420px) { .booking { padding-bottom:calc(66px + env(safe-area-inset-bottom)); }.booking h2 { font-size:44px; }.booking-copy { margin-bottom:-3px; }.booking-form { margin-left:-1px; margin-right:-1px; }.field textarea { height:90px; } }
   </style>
 </head>
 <body>
@@ -111,11 +113,14 @@
   <script>
     const menuButton = document.querySelector('.menu');
     const navigation = document.querySelector('.navlinks');
+    const bookingForm = document.getElementById('booking-form');
+    document.querySelectorAll('a[href="#termin"]').forEach(link=>link.setAttribute('href','#booking-form'));
+    document.querySelectorAll('a[href="#booking-form"]').forEach(link=>link.addEventListener('click',event=>{ event.preventDefault(); bookingForm.classList.add('is-visible'); bookingForm.scrollIntoView({behavior:'instant',block:'start'}); history.replaceState(null,'','#booking-form'); }));
     const closeMenu = () => { navigation.classList.remove('open'); menuButton.classList.remove('is-open'); menuButton.setAttribute('aria-expanded','false'); menuButton.setAttribute('aria-label','Menü öffnen'); };
     menuButton.addEventListener('click', () => { const open=navigation.classList.toggle('open'); menuButton.classList.toggle('is-open',open); menuButton.setAttribute('aria-expanded',open); menuButton.setAttribute('aria-label',open?'Menü schließen':'Menü öffnen'); });
     document.querySelectorAll('.navlinks a').forEach(a=>a.addEventListener('click',closeMenu));
     window.addEventListener('scroll',()=>document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>12),{passive:true});
-    const revealTargets = document.querySelectorAll('.intro-grid,.service-heading,.service,.experience-top,.step,.price-head,.price-row,.gallery-head,.gallery-slide,.partner-box,.booking-copy,.booking-form,.footer-top > *');
+    const revealTargets = document.querySelectorAll('.intro-grid,.service-heading,.service,.experience-top,.step,.price-head,.price-row,.gallery-head,.gallery-slide,.partner-box,.booking-copy,.footer-top > *');
     revealTargets.forEach((element,index)=>{ element.classList.add('reveal'); element.style.transitionDelay=`${(index%4)*70}ms`; });
     if ('IntersectionObserver' in window) { const observer=new IntersectionObserver((entries)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}}),{threshold:.12}); revealTargets.forEach(element=>observer.observe(element)); } else { revealTargets.forEach(element=>element.classList.add('is-visible')); }
     const heroVideo = document.querySelector('.hero-video');
